@@ -12,7 +12,7 @@ class Category extends Model
     public static function booted()
     {
         static::creating(function ($model) {
-            return $model->slug =    \Str::slug($model->title);
+            return $model->slug =    \Str::slug($model->name);
         });
     }
 

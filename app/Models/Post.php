@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +19,11 @@ class Post extends Model
         static::creating(function ($model) {
             return $model->slug =    \Str::slug($model->title);
         });
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
     }
 
     public function images()

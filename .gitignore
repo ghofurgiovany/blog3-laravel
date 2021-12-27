@@ -15,3 +15,6 @@ yarn-error.log
 /.vscode
 _ide_helper.php
 test.php
+_lighthouse_ide_helper.php
+programmatic-types.graphql
+schema-directives.graphql

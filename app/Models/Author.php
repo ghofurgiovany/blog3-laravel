@@ -9,20 +9,27 @@ class Author extends Model
 {
     use HasFactory;
 
+    protected $appends = ['avatar'];
+
     public static function booted()
     {
         static::creating(function ($model) {
-            return $model->slug =    \Str::slug($model->title);
+            return $model->slug =    \Str::slug($model->name);
         });
     }
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class, 'author_post', 'author_id', 'post_id');
+        return $this->hasMany(Post::class);
     }
 
-    public function avatar()
+    public function images()
     {
         return $this->morphToMany(Image::class, 'imageable');
+    }
+
+    public function getAvatarAttribute()
+    {
+        return $this->images()->first()->toArray();
     }
 }

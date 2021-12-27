@@ -28,9 +28,10 @@ class DatabaseSeeder extends Seeder
                     ->has(
                         Category::factory()->count(2)
                     )
+                    ->hasTags(10)
                     ->count(10)
             )
-            ->hasAvatar()
+            ->hasImages()
             ->create();
     }
 }
