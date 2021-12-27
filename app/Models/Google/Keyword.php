@@ -11,6 +11,7 @@ class Keyword extends Model
     use HasFactory;
 
     protected $table    =   'google_news_keywords';
+    protected $guarded  =   [];
 
     public function categories()
     {

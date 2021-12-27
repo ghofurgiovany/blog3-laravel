@@ -15,7 +15,9 @@ class CreateGoogleNewsArticlesTable extends Migration
     {
         Schema::create('google_news_articles', function (Blueprint $table) {
             $table->longText('guid')->unique()->primary();
-            $table->string('title')->unique();
+            $table->longText('title')->unique();
+            $table->longText('link')->unique();
+            $table->string('status')->nullable()->default('pending');
 
             $table->timestamps();
         });

@@ -9,5 +9,6 @@ class Generated extends Model
 {
     use HasFactory;
 
-    protected $table = 'google_news_articles';
+    protected $table    =   'google_news_articles';
+    protected $guarded  =   [];
 }
