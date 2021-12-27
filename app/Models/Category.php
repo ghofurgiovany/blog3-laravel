@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $guarded  =   [];
+
     public static function booted()
     {
         static::creating(function ($model) {

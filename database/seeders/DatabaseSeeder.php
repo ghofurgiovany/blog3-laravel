@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\Child\Country;
 use App\Models\Google\Keyword;
 use App\Models\Image;
 use App\Models\Post;
@@ -18,11 +19,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Keyword::create([
-            'keyword'   =>  'bts',
-            'country'   =>  'ID',
-            'language'  =>  'id'
+        $Country = Country::create([
+            'name'  =>  'Indonesia',
+            'iso2'  =>  'ID'
         ]);
+
+        $author     =   Author::factory()->create();
+
+        $keyword    =   $author->googleNewsKeyword()->create([
+            'keyword'   =>  'bts',
+            'language'  =>  'id'
+        ])->refresh();
+
+        $Country->keywords()->sync($keyword);
+
+        return;
 
         Author::factory()
             ->has(

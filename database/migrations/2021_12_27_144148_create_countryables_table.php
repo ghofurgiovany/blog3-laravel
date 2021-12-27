@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGoogleNewsKeywordTable extends Migration
+class CreateCountryablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateGoogleNewsKeywordTable extends Migration
      */
     public function up()
     {
-        Schema::create('google_news_keywords', function (Blueprint $table) {
+        Schema::create('countryables', function (Blueprint $table) {
             $table->id();
-
-            $table->bigInteger('author_id');
-            $table->string('keyword');
-            $table->string('language');
-
+            $table->bigInteger('country_id');
+            $table->morphs('countryable');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateGoogleNewsKeywordTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('google_news_keyword');
+        Schema::dropIfExists('countryables');
     }
 }

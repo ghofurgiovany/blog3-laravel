@@ -23,8 +23,8 @@ class CreatePostsTable extends Migration
             $table->longText('description');
             $table->json('keywords');
             $table->longText('content');
+            $table->json('paragraph')->nullable();
 
-            $table->string('country')->nullable()->default('ID');
             $table->string('language')->nullable()->default('id');
 
             $table->integer('views')->nullable()->default(0);

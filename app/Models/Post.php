@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Child\Country;
 use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,8 +12,11 @@ class Post extends Model
     use HasFactory;
 
     protected $casts    =   [
-        'keywords'  =>  'array'
+        'keywords'  =>  'array',
+        'paragraph' =>  'array'
     ];
+
+    protected $guarded  =   [];
 
     public static function booted()
     {
@@ -39,5 +43,10 @@ class Post extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function countries()
+    {
+        return $this->morphToMany(Country::class, 'countryable');
     }
 }

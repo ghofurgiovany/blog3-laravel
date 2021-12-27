@@ -9,6 +9,8 @@ class Image extends Model
 {
     use HasFactory;
 
+    protected $guarded  =   [];
+
     public function authors()
     {
         return $this->morphedByMany(Image::class, 'imageable');

@@ -13,6 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Models\Google\Generated;
+use App\Models\Google\Keyword;
+use App\Models\Post;
+use Illuminate\Support\Facades\Http;
+
+class Jobs
+{
+    public function __construct(string $link, Keyword $keyword)
+    {
+    }
+}
+
+
+Route::get('/test', function () {
+    new Jobs('https://www.hindustantimes.com/entertainment/music/bts-v-sings-along-knockin-on-heaven-s-door-while-rm-jams-to-it-members-tease-jungkook-watch-101640513487443.html', Keyword::find(1));
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
