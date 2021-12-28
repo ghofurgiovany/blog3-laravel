@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "algolia/algoliasearch-client-php": "^3.1",
         "armincms/json": "^0.5.2",
         "barryvdh/laravel-ide-helper": "^2.10",
         "cloudinary-labs/cloudinary-laravel": "^1.0",
@@ -20,6 +21,7 @@
         "laravel/horizon": "^5.7",
         "laravel/nova": "*",
         "laravel/sanctum": "^2.11",
+        "laravel/scout": "^9.3",
         "laravel/tinker": "^2.5",
         "mll-lab/laravel-graphql-playground": "^2.5",
         "nuwave/lighthouse": "^5.31",

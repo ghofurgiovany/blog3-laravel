@@ -1,6 +1,6 @@
 type Query {
     post(slug: String! @eq): Post @find
-    posts(where: WhereConstraints): [Post] @paginate(defaultCount: 20)
+    posts(query: String @search): [Post] @paginate(defaultCount: 20)
     author(slug: String! @eq): Author! @find
     category(slug: String! @eq): Category! @find
     tags: [Tag] @paginate(defaultCount: 5)
@@ -41,9 +41,16 @@ type Post {
     categories: [Category]!
     tags: [Tag]! @paginate(defaultCount: 5)
     author: Author!
+    language: string
     created_at: String!
     updated_at: String!
     related: [Post] @field(resolver: "App\\GraphQL\\Queries\\PostQuery@related")
+    countries: [Country]
+}
+
+type Country {
+    name: String!
+    iso2: String!
 }
 
 type Image {

@@ -5,7 +5,8 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/private/paths', fn () => Post::get(['slug']));
+Route::post('/ping/{post}', fn (Post $post) => $post->increment('views') ? [] : []);
+Route::get('/private/paths', fn () => Post::with(['countries'])->get(['slug', 'language']));
 Route::get('/private/paths/tag', fn () => Tag::get(['slug']));
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

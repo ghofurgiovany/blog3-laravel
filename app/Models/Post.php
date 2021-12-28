@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use App\Models\Child\Country;
-use Auth;
-use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $casts    =   [
         'keywords'  =>  'array',
@@ -19,6 +18,11 @@ class Post extends Model
 
     protected $guarded  =   [];
     protected $appends  =   ['thumbnail'];
+
+    public function searchableAs()
+    {
+        return 'posts_index';
+    }
 
     public static function booted()
     {
