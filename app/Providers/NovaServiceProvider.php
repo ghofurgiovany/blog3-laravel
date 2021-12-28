@@ -42,6 +42,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Number::make('Max article age', 'google_news_max_age')->placeholder('( in hours )'),
+            Text::make('Interval News', 'google_news_interval')->placeholder('* * * * *')->help('minute hour day etc')
         ], [], 'Google News');
 
         NovaSettings::addSettingsFields([

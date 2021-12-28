@@ -115,6 +115,8 @@ class MakePostJob implements ShouldQueue
             'status'    =>  'success'
         ]);
 
-        PostFacebook::dispatch($post);
+        if ((bool) \setting('facebook_active', false)) {
+            PostFacebook::dispatch($post);
+        }
     }
 }
