@@ -81,7 +81,9 @@ class GoogleNews extends Command
                 ]);
 
                 if (
-                    Carbon::parse((string) $item->pubDate) >= Carbon::now()->subHours(env('MAX_AGE_ARTICLE', 10))
+                    Carbon::parse((string) $item->pubDate) >= Carbon::now()->subHours(
+                        \setting('google_news_max_age', 10)
+                    )
                 ) {
                     continue;
                 }
