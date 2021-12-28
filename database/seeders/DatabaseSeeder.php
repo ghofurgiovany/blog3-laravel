@@ -8,6 +8,10 @@ use App\Models\Child\Country;
 use App\Models\Google\Keyword;
 use App\Models\Image;
 use App\Models\Post;
+use App\Models\Setting;
+use App\Models\User;
+use Auth;
+use Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +23,48 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::create([
+            'name'          =>  'admin',
+            'password'      =>  Hash::make('admin123'),
+            'email'         =>  'admin@admin.com'
+        ]);
+
+        Setting::create([
+            [
+                'key'   =>  'site_url',
+                'value' =>  'https://news.geratekno.my.id'
+            ],
+            [
+                'key'   =>  'facebook_active',
+                'value' =>  '1'
+            ],
+            [
+                'key'   =>  'facebook_client_id',
+                'value' =>  '456646825805820'
+            ],
+            [
+                'key'   =>  'facebook_secret',
+                'value' =>  '320c845cf3c7583546129195df00a440'
+            ],
+            [
+                'key'   =>  'google_news_max_age',
+                'value' =>  '10'
+            ]
+        ]);
+
+        Author::factory()
+            ->hasImages(1)
+            ->create();
+
+        Country::create([
+            'name'  =>  'Indonesia',
+            'iso2'  =>  'id'
+        ]);
+
+        Category::factory()->create();
+
+        return;
+
         $Country = Country::create([
             'name'  =>  'Indonesia',
             'iso2'  =>  'ID'
@@ -33,21 +79,38 @@ class DatabaseSeeder extends Seeder
 
         $Country->keywords()->sync($keyword);
 
-        return;
+        // return;
 
-        Author::factory()
-            ->has(
-                Post::factory()
-                    ->has(
-                        Image::factory()->count(1)
-                    )
-                    ->has(
-                        Category::factory()->count(2)
-                    )
-                    ->hasTags(10)
-                    ->count(10)
-            )
-            ->hasImages()
+        $author  = Author::factory()->has(
+            Post::factory()
+                ->has(
+                    Image::factory()->count(1)
+                )
+                ->hasTags(5)
+                ->count(20)
+        )
+            ->hasImages(2)
             ->create();
+
+        $categories = Category::factory(20)->create();
+
+        $author->posts()->each(function ($post) use ($categories) {
+            $post->categories()->sync($categories);
+        });
+
+        // Author::factory()
+        //     ->has(
+        //         Post::factory()
+        //             ->has(
+        //                 Image::factory()->count(1)
+        //             )
+        //             ->has(
+        //                 Category::factory()->count(2)
+        //             )
+        //             ->hasTags(10)
+        //             ->count(200)
+        //     )
+        //     ->hasImages()
+        //     ->create();
     }
 }

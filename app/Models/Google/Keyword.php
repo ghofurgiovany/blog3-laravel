@@ -5,6 +5,7 @@ namespace App\Models\Google;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\Child\Country;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,5 +35,10 @@ class Keyword extends Model
     public function getCountryAttribute()
     {
         return $this->countries()->first();
+    }
+
+    public function posts()
+    {
+        return $this->morphToMany(Post::class, 'postable');
     }
 }

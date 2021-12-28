@@ -3,14 +3,14 @@
 use App\Models\Setting;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
-// function setting($key, $default = '')
-// {
-//   if ($setting = Setting::find($key)) {
-//     return $setting->value;
-//   }
+function setting($key, $default = '')
+{
+  if ($setting = Setting::find($key)) {
+    return $setting->value;
+  }
 
-//   return $default;
-// }
+  return $default;
+}
 
 function getThumbnail($url, $absolute = false)
 {

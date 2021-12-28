@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Google\Generated;
 use App\Models\Google\Keyword;
+use App\Models\Image;
 use DOMDocument;
 use DOMXPath;
 use Exception;
@@ -30,17 +31,14 @@ class MakePostJob implements ShouldQueue
 
     public function handle()
     {
-        if ($this->batch()->cancelled()) {
-            return;
-        }
-
-        $keyword        = $this->key;
+        $keyword        = $this->keyword;
         $articleSource  = Http::get($this->link);
+        $generated      = Generated::where([
+            'link'  =>  $this->link
+        ]);
 
         if ($articleSource->failed()) {
-            Generated::where([
-                'link'  =>  $this->link
-            ])->update([
+            $generated->update([
                 'status'  =>  'failed'
             ]);
 
@@ -84,7 +82,11 @@ class MakePostJob implements ShouldQueue
         $siteName       =   $siteName ? $siteName->value : '';
         $title          =   preg_replace('/\s-\s(.*)|Halaman all/', '', $title);
         $content        =   str_ireplace($siteName, 'Geratekno.my.id', implode("\n", $content));
-        $image          =   getThumbnail($image);
+        $image          =   getThumbnail($image, \true);
+        $image          =   Image::create([
+            'url'       =>  $image,
+            'altText'   =>  $title
+        ]);
 
         $Post           = $keyword->author->posts()->create([
             'title'         =>  $title,
@@ -96,9 +98,7 @@ class MakePostJob implements ShouldQueue
         ]);
 
         if (!$Post) {
-            Generated::where([
-                'link'  =>  $this->link
-            ])->update([
+            $generated->update([
                 'status'  =>  'failed'
             ]);
 
@@ -106,7 +106,15 @@ class MakePostJob implements ShouldQueue
         }
 
         $post = $Post->refresh();
-        $post->countries()->sync($keyword->countries);
-        $post->categories()->sync($keyword->categories);
+
+        $post->images()->sync($image) ?: throw new Exception("Error while syncing images", 1);
+        $post->countries()->sync($keyword->countries) ?: throw new Exception("Error while syncing countries", 1);
+        $post->categories()->sync($keyword->categories) ?: throw new Exception("Error while syncing categories", 1);
+
+        $generated->update([
+            'status'    =>  'success'
+        ]);
+
+        PostFacebook::dispatch($post);
     }
 }

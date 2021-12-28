@@ -1,7 +1,22 @@
 type Query {
-    posts: [Post] @paginate(defaultCount: 10)
+    post(slug: String! @eq): Post @find
+    posts(where: WhereConstraints): [Post] @paginate(defaultCount: 20)
     author(slug: String! @eq): Author! @find
     category(slug: String! @eq): Category! @find
+    tags: [Tag] @paginate(defaultCount: 5)
+    tag(slug: String! @eq): Tag @find
+
+    categories: [Category] @paginate(defaultCount: 5)
+    popularPosts: [Post] @paginate(defaultCount: 5, scopes: ["popular"])
+}
+
+input WhereConstraints {
+    column: String
+    operator: String
+    value: String
+    AND: [WhereConstraints!]
+    OR: [WhereConstraints!]
+    NOT: [WhereConstraints!]
 }
 
 type Author {
@@ -18,16 +33,21 @@ type Post {
     description: String!
     keywords: [String]!
     content: String!
+    paragraph: [String]!
     views: Int
     shares: Int
     images: [Image!]!
+    thumbnail: Image
     categories: [Category]!
-    tags: [Tag]!
+    tags: [Tag]! @paginate(defaultCount: 5)
     author: Author!
+    created_at: String!
+    updated_at: String!
+    related: [Post] @field(resolver: "App\\GraphQL\\Queries\\PostQuery@related")
 }
 
 type Image {
-    url: String!
+    url: String
     altText: String
 }
 
