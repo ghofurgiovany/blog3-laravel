@@ -14,6 +14,18 @@ function setting($key, $default = '')
 
 function getThumbnail($url, $absolute = false)
 {
+
+  if (App::environment(['production'])) {
+    try {
+      $image  = Cloudinary::upload($url);
+      return $image->getSecurePath();
+    } catch (\Throwable $th) {
+      return 'https://res.cloudinary.com/dyflpaklp/image/upload/v1640329427/tvrk1ro0hagdwbmfl9fz.png';
+    }
+
+    return;
+  }
+
   if (!$absolute) {
     $articlePage    =   Http::get($url)->body();
     \preg_match_all('/og:image" content="(.*)"/', $articlePage, $thumbnails);
@@ -27,16 +39,7 @@ function getThumbnail($url, $absolute = false)
     return 'https://res.cloudinary.com/dyflpaklp/image/upload/v1640329427/tvrk1ro0hagdwbmfl9fz.png';
   }
 
-  if (App::environment(['local'])) {
-    return getThumbnailDev($url);
-  }
-
-  try {
-    $image  = Cloudinary::upload($thumbnail);
-    return $image->getSecurePath();
-  } catch (\Throwable $th) {
-    return 'https://res.cloudinary.com/dyflpaklp/image/upload/v1640329427/tvrk1ro0hagdwbmfl9fz.png';
-  }
+  return getThumbnailDev($url);
 }
 
 function getThumbnailDev($thumbnail)
