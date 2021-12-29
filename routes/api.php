@@ -11,6 +11,7 @@ Route::get('/private/paths', fn () => Post::with(['countries'])->get(['slug', 'l
 Route::get('/private/paths/tag', fn () => Tag::get(['slug']));
 Route::get('/paths/v2/sitemap/count', [PostController::class, 'sitemapCount']);
 Route::get('/paths/v2/sitemap', [PostController::class, 'sitemap']);
+Route::get('/paths/v2/rss', [PostController::class, 'feeds']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

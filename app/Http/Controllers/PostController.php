@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use DB;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -24,6 +24,30 @@ class PostController extends Controller
                 'created_at'    =>  $post->created_at,
                 'updated_at'    =>  $post->updated_at,
                 'slug'          =>  $post->slug
+            ]);
+    }
+
+    public function feeds(Request $request)
+    {
+        $collection =   ['updated_at', 'created_at', 'slug', 'title', 'description', 'paragraph', 'thumbnail'];
+
+        if (!$request->q) {
+            $posts  =   Post::with(['categories'])->paginate(50, $collection);
+        } else {
+            $posts  =   Post::with(['categories'])->where('title', 'like', '%' . $request->q . '%')->paginate(50, $collection);
+        }
+
+        return $posts
+            ->getCollection()
+            ->map(fn ($post) => [
+                'created_at'        =>  $post->created_at,
+                'updated_at'        =>  $post->updated_at,
+                'slug'              =>  $post->slug,
+                'title'             =>  $post->title,
+                'description'       =>  $post->description,
+                'paragraph'         =>  \gettype($post->paragraph) === 'array' ? $post->paragraph[0] : '',
+                'thumbnail'         =>  $post->thumbnail,
+                'categories'        =>  $post->categories
             ]);
     }
 }
