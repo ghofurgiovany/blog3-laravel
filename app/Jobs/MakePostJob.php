@@ -71,13 +71,19 @@ class MakePostJob implements ShouldQueue
         }
 
         $content        =   [];
-        foreach ([0, 1, 2, 3] as $p) {
-            if ($textContent = $articleContent[$p]) {
-                if (strlen($textContent->textContent) > 0) {
-                    $content[] = '<p>' . $textContent->textContent . '</p>';
-                }
+        foreach ($articleContent as $p) {
+            if ($p = (string) $p->textContent) {
+                $content[] = '<p>' . $p . '</p>';
             }
         }
+
+        // foreach ([0, 1, 2, 3] as $p) {
+        //     if ($textContent = $articleContent[$p]) {
+        //         if (strlen($textContent->textContent) > 0) {
+        //             $content[] = '<p>' . $textContent->textContent . '</p>';
+        //         }
+        //     }
+        // }
 
         $siteName       =   $xPath->query('//meta[@property="og:site_name"]/@content')->item(0);
         $siteName       =   $siteName ? $siteName->value : '';
