@@ -41,7 +41,7 @@ type Post {
     categories: [Category]!
     tags: [Tag]! @paginate(defaultCount: 5)
     author: Author!
-    language: string
+    language: String
     created_at: String!
     updated_at: String!
     related: [Post] @field(resolver: "App\\GraphQL\\Queries\\PostQuery@related")
