@@ -29,12 +29,10 @@ class PostController extends Controller
 
     public function feeds(Request $request)
     {
-        $collection =   ['updated_at', 'created_at', 'slug', 'title', 'description', 'paragraph', 'images'];
-
         if (!$request->q) {
-            $posts  =   Post::with(['categories'])->paginate(50, $collection);
+            $posts  =   Post::with(['categories'])->paginate(50);
         } else {
-            $posts  =   Post::with(['categories'])->where('title', 'like', '%' . $request->q . '%')->paginate(50, $collection);
+            $posts  =   Post::with(['categories'])->where('title', 'like', '%' . $request->q . '%')->paginate(50);
         }
 
         return $posts
@@ -46,7 +44,7 @@ class PostController extends Controller
                 'title'             =>  $post->title,
                 'description'       =>  $post->description,
                 'paragraph'         =>  \gettype($post->paragraph) === 'array' ? $post->paragraph[0] : '',
-                'images'            =>  $post->images && count($post->images) >= 1 ? $posts[0] : [],
+                'thumbnail'            =>  $post->thumbnail,
                 'categories'        =>  $post->categories
             ]);
     }
