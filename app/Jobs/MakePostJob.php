@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Facebook\Page;
 use App\Models\Google\Generated;
 use App\Models\Google\Keyword;
 use App\Models\Image;
@@ -123,6 +124,19 @@ class MakePostJob implements ShouldQueue
         ]);
 
         if ((bool) \setting('facebook_active', false)) {
+            $categories   = $post->categories()->get(['category_id'])->map(fn ($c) => $c->category_id);
+            if (!$categories) {
+                return;
+            }
+
+            $pages        = Page::where(['active' => true])->whereHas('categories', function ($query) use ($categories) {
+                return $query->whereIn('category_id', $categories);
+            })->get();
+
+            if (!$pages) {
+                return;
+            }
+
             PostFacebook::dispatch($post)->delay(
                 Carbon::now()->addMinutes(rand(5, 15))
             );
