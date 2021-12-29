@@ -29,13 +29,13 @@ class PostController extends Controller
 
     public function feeds(Request $request)
     {
-        if (!$request->q) {
-            $posts  =   Post::with(['categories'])->paginate(50);
-        } else {
-            $posts  =   Post::with(['categories'])->where('title', 'like', '%' . $request->q . '%')->paginate(50);
+        $posts  = Post::with(['categories']);
+
+        if (isset($request->q)) {
+            $posts->where('title', 'like', '%' . $request->q . '%');
         }
 
-        return $posts
+        return $posts->paginate(50)
             ->getCollection()
             ->map(fn ($post) => [
                 'created_at'        =>  $post->created_at,
