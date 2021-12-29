@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Google\Generated;
 use App\Models\Google\Keyword;
 use App\Models\Image;
+use Carbon\Carbon;
 use DOMDocument;
 use DOMXPath;
 use Exception;
@@ -116,7 +117,9 @@ class MakePostJob implements ShouldQueue
         ]);
 
         if ((bool) \setting('facebook_active', false)) {
-            PostFacebook::dispatch($post);
+            PostFacebook::dispatch($post)->delay(
+                Carbon::now()->addMinutes(rand(5, 15))
+            );
         }
     }
 }
