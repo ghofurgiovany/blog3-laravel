@@ -16,9 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(GoogleNews::class)->cron(
-            \setting('google_news_interval', '10 * * * *')
-        );
+        $schedule->command(GoogleNews::class);
     }
 
     /**

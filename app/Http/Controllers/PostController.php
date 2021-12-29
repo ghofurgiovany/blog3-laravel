@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -29,14 +30,18 @@ class PostController extends Controller
 
     public function feeds(Request $request)
     {
-        $posts  = Post::with(['categories']);
-
-        if (isset($request->q)) {
-            $posts->where('title', 'like', '%' . $request->q . '%');
+        if (!$request->q) {
+            $posts      =   Post::paginate(50);
+        } else {
+            $posts      =   Category::where('name', $request->q);
+            if ($posts->exists()) {
+                $posts  =   $posts->first()->posts()->paginate(50);
+            } else {
+                $posts  =   Post::paginate(50);
+            }
         }
 
-        return $posts->paginate(50)
-            ->getCollection()
+        return $posts->getCollection()
             ->map(fn ($post) => [
                 'created_at'        =>  $post->created_at,
                 'updated_at'        =>  $post->updated_at,

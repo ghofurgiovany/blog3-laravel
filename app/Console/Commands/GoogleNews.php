@@ -109,9 +109,11 @@ class GoogleNews extends Command
             if ($jobBatch && count($jobBatch)) {
                 Bus::batch($jobBatch)
                     ->name(
-                        'Generate: ' . $this->keyword->keyword
+                        'Generate: ' . $keyword->keyword
                     )
                     ->dispatch();
+
+                $this->info("Article found: " . count($jobBatch));
             }
         }
     }
