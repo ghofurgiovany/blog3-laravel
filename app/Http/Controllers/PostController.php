@@ -43,7 +43,7 @@ class PostController extends Controller
                 'slug'              =>  $post->slug,
                 'title'             =>  $post->title,
                 'description'       =>  $post->description,
-                'paragraph'         =>  \gettype($post->paragraph) === 'array' ? $post->paragraph[0] : '',
+                'paragraph'         =>  \gettype($post->paragraph) === 'array' && isset($post->paragraph[0]) ? $post->paragraph[0] : '',
                 'thumbnail'            =>  $post->thumbnail,
                 'categories'        =>  $post->categories
             ]);
