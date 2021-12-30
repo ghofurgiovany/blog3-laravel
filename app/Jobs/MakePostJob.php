@@ -67,6 +67,10 @@ class MakePostJob implements ShouldQueue
         $paragraph      =   [];
         foreach ($articleContent as $content) {
             if ($p = (string) $content->textContent) {
+                if (\preg_match("/Baca Juga: /", $content->textContent)) {
+                    continue;
+                }
+
                 $paragraph[] = $p;
             }
         }
