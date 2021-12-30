@@ -23,34 +23,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name'          =>  'admin',
-            'password'      =>  Hash::make('admin123'),
-            'email'         =>  'admin@admin.com'
-        ]);
+        // User::create([
+        //     'name'          =>  'admin',
+        //     'password'      =>  Hash::make('admin123'),
+        //     'email'         =>  'admin@admin.com'
+        // ]);
 
-        Setting::create([
-            [
-                'key'   =>  'site_url',
-                'value' =>  'https://news.geratekno.my.id'
-            ],
-            [
-                'key'   =>  'facebook_active',
-                'value' =>  '1'
-            ],
-            [
-                'key'   =>  'facebook_client_id',
-                'value' =>  '456646825805820'
-            ],
-            [
-                'key'   =>  'facebook_secret',
-                'value' =>  '320c845cf3c7583546129195df00a440'
-            ],
-            [
-                'key'   =>  'google_news_max_age',
-                'value' =>  '10'
-            ]
-        ]);
+        // Setting::create([
+        //     [
+        //         'key'   =>  'site_url',
+        //         'value' =>  'https://news.geratekno.my.id'
+        //     ],
+        //     [
+        //         'key'   =>  'facebook_active',
+        //         'value' =>  '1'
+        //     ],
+        //     [
+        //         'key'   =>  'facebook_client_id',
+        //         'value' =>  '456646825805820'
+        //     ],
+        //     [
+        //         'key'   =>  'facebook_secret',
+        //         'value' =>  '320c845cf3c7583546129195df00a440'
+        //     ],
+        //     [
+        //         'key'   =>  'google_news_max_age',
+        //         'value' =>  '10'
+        //     ]
+        // ]);
 
         Author::factory()
             ->hasImages(1)
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
 
         Category::factory()->create();
 
-        return;
+        // return;
 
         $Country = Country::create([
             'name'  =>  'Indonesia',

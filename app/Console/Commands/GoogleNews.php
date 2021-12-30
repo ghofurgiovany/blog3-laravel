@@ -67,15 +67,10 @@ class GoogleNews extends Command
             }
 
             $rssXml =   \simplexml_load_string($responseRss) or throw new Exception("Cannot parse XML", 1);
-            $items  =   [];
-
-            foreach ($rssXml->channel->item as $item) {
-                $items[]    =   $item;
-            }
 
             $jobBatch = [];
 
-            foreach (array_slice($items, 0, 30) as $item) {
+            foreach ($rssXml->channel->item as $item) {
 
                 $article  = Generated::where([
                     'guid'  =>  (string) $item->guid
@@ -112,8 +107,6 @@ class GoogleNews extends Command
                         'Generate: ' . $keyword->keyword
                     )
                     ->dispatch();
-
-                $this->info("Article found: " . count($jobBatch));
             }
         }
     }
