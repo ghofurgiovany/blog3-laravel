@@ -40,6 +40,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ];
         }, [], 'Facebook');
 
+        NovaSettings::addSettingsFields(function () {
+            if (!(bool) \setting('twitter_active', \false)) {
+                return [
+                    Boolean::make('Active', 'twitter_active')
+                ];
+            }
+
+            return [
+                Boolean::make('Active', 'twitter_active'),
+                Number::make('Account ID', 'twitter_account_id'),
+                Text::make('Consumer Key', 'twitter_consumer_key'),
+                Text::make('Consumer Secret', 'twitter_consumer_secret'),
+                Text::make('Bearer Token', 'twitter_bearer_token'),
+                Text::make('Access Token', 'twitter_access_token'),
+                Text::make('Access Token Secret', 'twitter_access_token_secret')
+            ];
+        }, [], 'Twitter');
+
         NovaSettings::addSettingsFields([
             Number::make('Max article age', 'google_news_max_age')->placeholder('( in hours )'),
             Text::make('Interval News', 'google_news_interval')->placeholder('* * * * *')->help('minute hour day etc')

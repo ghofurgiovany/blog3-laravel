@@ -24,11 +24,12 @@
         "laravel/scout": "^9.3",
         "laravel/tinker": "^2.5",
         "mll-lab/laravel-graphql-playground": "^2.5",
+        "noweh/twitter-api-v2-php": "^1.4",
         "nuwave/lighthouse": "^5.31",
         "optimistdigital/nova-settings": "^3.3",
+        "phpseclib/bcmath_compat": "1.0.4",
         "predis/predis": "^1.1",
-        "sentry/sentry-laravel": "^2.10",
-        "phpseclib/bcmath_compat": "1.0.4"
+        "sentry/sentry-laravel": "^2.10"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -115,9 +115,9 @@ class MakePostJob implements ShouldQueue
 
         $post = $Post->refresh();
 
-        $post->images()->sync($image) ?: throw new Exception("Error while syncing images", 1);
-        $post->countries()->sync($keyword->countries) ?: throw new Exception("Error while syncing countries", 1);
-        $post->categories()->sync($keyword->categories) ?: throw new Exception("Error while syncing categories", 1);
+        $post->images()->attach($image) ?: throw new Exception("Error while syncing images", 1);
+        $post->countries()->attach($keyword->countries) ?: throw new Exception("Error while syncing countries", 1);
+        $post->categories()->attach($keyword->categories) ?: throw new Exception("Error while syncing categories", 1);
 
         $generated->update([
             'status'    =>  'success'
@@ -138,8 +138,12 @@ class MakePostJob implements ShouldQueue
             }
 
             PostFacebook::dispatch($post)->delay(
-                Carbon::now()->addMinutes(rand(5, 15))
+                Carbon::now()->addMinutes(rand(2, 5))
             );
+        }
+
+        if ((bool) \setting('twitter_active')) {
+            TwitterPost::dispatch($post);
         }
     }
 }

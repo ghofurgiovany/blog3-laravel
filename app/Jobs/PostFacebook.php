@@ -55,7 +55,7 @@ class PostFacebook implements ShouldQueue
                 $failed[] = $page->name;
             }
 
-            $page->posts()->sync($this->post);
+            $page->posts()->attach($this->post);
         }
 
         if ($failed) {
