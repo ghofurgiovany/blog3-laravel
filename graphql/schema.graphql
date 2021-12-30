@@ -1,10 +1,10 @@
 type Query {
-    post(slug: String! @eq): Post @find
+    post(slug: String! @eq): Post @first
     posts(query: String @search): [Post] @paginate(defaultCount: 20)
-    author(slug: String! @eq): Author! @find
-    category(slug: String! @eq): Category! @find
+    author(slug: String! @eq): Author! @first
+    category(slug: String! @eq): Category! @first
     tags: [Tag] @paginate(defaultCount: 5)
-    tag(slug: String! @eq): Tag @find
+    tag(slug: String! @eq): Tag @first
 
     categories: [Category] @paginate(defaultCount: 5)
     popularPosts: [Post] @paginate(defaultCount: 5, scopes: ["popular"])
