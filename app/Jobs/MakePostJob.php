@@ -97,8 +97,8 @@ class MakePostJob implements ShouldQueue
 
         $siteName       =   $xPath->query('//meta[@property="og:site_name"]/@content')->item(0);
         $siteName       =   $siteName ? $siteName->value : '';
-        $title          =   \trim(preg_replace('/\s-\s(.*)|Halaman all/', '', $title));
-        $content        =   str_ireplace($siteName, 'Geratekno.my.id', implode("\n", $content));
+        $title          =   \trim(preg_replace('/Halaman\sall|\s-\s(.*)|\s\|(.*)/', '', $title));
+        $content        =   str_ireplace($siteName, 'Geratekno', implode("\n", $content));
         $image          =   getThumbnail($image, \true);
         $image          =   Image::create([
             'url'       =>  $image,
