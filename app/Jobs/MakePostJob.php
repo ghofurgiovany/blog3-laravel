@@ -71,14 +71,19 @@ class MakePostJob implements ShouldQueue
                     continue;
                 }
 
-                $paragraph[] = $p;
+                $paragraph[] = \trim($p);
             }
         }
 
         $content        =   [];
         foreach ($articleContent as $p) {
             if ($p = (string) $p->textContent) {
-                $content[] = '<p>' . $p . '</p>';
+
+                if (\preg_match("/Baca Juga: /", $p)) {
+                    continue;
+                }
+
+                $content[] = '<p>' . \trim($p) . '</p>';
             }
         }
 
@@ -92,7 +97,7 @@ class MakePostJob implements ShouldQueue
 
         $siteName       =   $xPath->query('//meta[@property="og:site_name"]/@content')->item(0);
         $siteName       =   $siteName ? $siteName->value : '';
-        $title          =   preg_replace('/\s-\s(.*)|Halaman all/', '', $title);
+        $title          =   \trim(preg_replace('/\s-\s(.*)|Halaman all/', '', $title));
         $content        =   str_ireplace($siteName, 'Geratekno.my.id', implode("\n", $content));
         $image          =   getThumbnail($image, \true);
         $image          =   Image::create([
@@ -102,8 +107,8 @@ class MakePostJob implements ShouldQueue
 
         $Post           = $keyword->author->posts()->create([
             'title'         =>  $title,
-            'description'   =>  $description,
-            'keywords'      =>  explode(', ', $keywords),
+            'description'   =>  \trim($description),
+            'keywords'      =>  explode(', ', \trim($keywords)),
             'content'       =>  $content,
             'paragraph'     =>  $paragraph,
             'language'      =>  $keyword->language
