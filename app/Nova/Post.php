@@ -55,7 +55,7 @@ class Post extends Resource
             // Textarea::make('keywords')->displayUsing(fn ($k) => implode(", ", $k)),
             // Textarea::make('Paragraph')->displayUsing(fn ($p) => implode("\n\n", $p)),
             Text::make('Language')->displayUsing(fn ($lang) => \strtoupper($lang))->textAlign("center"),
-            Number::make('Views')->textAlign('center'),
+            Number::make('Views')->textAlign('center')->sortable(),
             Number::make('Shares')->textAlign('center'),
             BelongsTo::make('Author')->textAlign('center'),
             MorphMany::make('Categories'),

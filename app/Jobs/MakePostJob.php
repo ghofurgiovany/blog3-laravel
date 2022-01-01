@@ -152,7 +152,9 @@ class MakePostJob implements ShouldQueue
         }
 
         if ((bool) \setting('twitter_active')) {
-            TwitterPost::dispatch($post);
+            TwitterPost::dispatch($post)->delay(
+                Carbon::now()->addMinutes(rand(2, 5))
+            );
         }
     }
 }
