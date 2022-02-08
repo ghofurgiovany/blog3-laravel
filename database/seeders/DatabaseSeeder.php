@@ -23,11 +23,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name'          =>  'admin',
-            'password'      =>  Hash::make('admin123'),
-            'email'         =>  'admin@admin.com'
-        ]);
+        User::create(['name'          =>  'admin', 'password'      =>  Hash::make('admin123'), 'email'         =>  'admin@admin.com']);
 
         // Setting::create([
         //     [
@@ -61,42 +57,47 @@ class DatabaseSeeder extends Seeder
             'iso2'  =>  'id'
         ]);
 
-        Category::factory()->create();
-
-        // return;
-
-        $Country = Country::create([
-            'name'  =>  'Indonesia',
-            'iso2'  =>  'ID'
+        Country::create([
+            'name'  =>  'United States',
+            'iso2'  =>  'us'
         ]);
 
-        $author     =   Author::factory()->create();
-
-        $keyword    =   $author->googleNewsKeyword()->create([
-            'keyword'   =>  'bts',
-            'language'  =>  'id'
-        ])->refresh();
-
-        $Country->keywords()->sync($keyword);
+        // Category::factory()->create();
 
         // return;
 
-        $author  = Author::factory()->has(
-            Post::factory()
-                ->has(
-                    Image::factory()->count(1)
-                )
-                ->hasTags(5)
-                ->count(20)
-        )
-            ->hasImages(2)
-            ->create();
+        // $Country = Country::create([
+        //     'name'  =>  'Indonesia',
+        //     'iso2'  =>  'ID'
+        // ]);
 
-        $categories = Category::factory(20)->create();
+        // $author     =   Author::factory()->create();
 
-        $author->posts()->each(function ($post) use ($categories) {
-            $post->categories()->sync($categories);
-        });
+        // $keyword    =   $author->googleNewsKeyword()->create([
+        //     'keyword'   =>  'bts',
+        //     'language'  =>  'id'
+        // ])->refresh();
+
+        // $Country->keywords()->sync($keyword);
+
+        // return;
+
+        // $author  = Author::factory()->has(
+        //     Post::factory()
+        //         ->has(
+        //             Image::factory()->count(1)
+        //         )
+        //         ->hasTags(5)
+        //         ->count(20)
+        // )
+        //     ->hasImages(2)
+        //     ->create();
+
+        // $categories = Category::factory(20)->create();
+
+        // $author->posts()->each(function ($post) use ($categories) {
+        //     $post->categories()->sync($categories);
+        // });
 
         // Author::factory()
         //     ->has(
