@@ -14,7 +14,7 @@ class MakeSlugPostUnique extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('slug', 255)->nullable()->unique()->change();
+            $table->string('slug', 10000)->nullable()->unique()->change();
         });
     }
 
