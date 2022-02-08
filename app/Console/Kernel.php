@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(GoogleNews::class);
+        $schedule->command(GoogleNews::class)->everyFiveMinutes();
     }
 
     /**
