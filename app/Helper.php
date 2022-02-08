@@ -17,32 +17,32 @@ function setting($key, $default = '')
 function getThumbnail($url, $absolute = false)
 {
 
-  $downloader   = new ImageDownloader([
-    'class' =>  ImageValidator::class
-  ]);
+  // $downloader   = new ImageDownloader([
+  //   'class' =>  ImageValidator::class
+  // ]);
 
-  $filename     = md5(\Str::random(16) . '-' . time()) . '.jpg';
-  $downloader->download($url, storage_path('app/public/uploads'), $filename);
+  // $filename     = md5(\Str::random(16) . '-' . time()) . '.jpg';
+  // $downloader->download($url, storage_path('app/public/uploads'), $filename);
 
-  return env('APP_URL') . '/uploads/' . $filename;
+  // return env('APP_URL') . '/uploads/' . $filename;
 
   if (App::environment(['production'])) {
 
-    $downloader   = new ImageDownloader([
-      'class' =>  ImageValidator::class
-    ]);
+    // $downloader   = new ImageDownloader([
+    //   'class' =>  ImageValidator::class
+    // ]);
 
-    $filename     = md5(\Str::random(16) . '-' . time()) . '.jpg';
-    $downloader->download($url, storage_path('app/public/uploads'), $filename);
+    // $filename     = md5(\Str::random(16) . '-' . time()) . '.jpg';
+    // $downloader->download($url, storage_path('app/public/uploads'), $filename);
 
-    return env('APP_URL') . '/uploads' . $filename;
+    // return env('APP_URL') . '/uploads' . $filename;
 
-    // try {
-    //   $image  = Cloudinary::upload($url);
-    //   return $image->getSecurePath();
-    // } catch (\Throwable $th) {
-    //   return 'https://res.cloudinary.com/dyflpaklp/image/upload/v1640329427/tvrk1ro0hagdwbmfl9fz.png';
-    // }
+    try {
+      $image  = Cloudinary::upload($url);
+      return $image->getSecurePath();
+    } catch (\Throwable $th) {
+      return 'https://res.cloudinary.com/dyflpaklp/image/upload/v1640329427/tvrk1ro0hagdwbmfl9fz.png';
+    }
 
     // return;
   }
