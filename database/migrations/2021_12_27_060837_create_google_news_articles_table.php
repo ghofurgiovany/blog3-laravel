@@ -18,7 +18,7 @@ class CreateGoogleNewsArticlesTable extends Migration
             $table->longText('guid')->nullable();
             $table->longText('title')->nullable();
             $table->longText('link')->nullable();
-            $table->longText('status')->nullable()->default('pending');
+            $table->longText('status')->nullable('pending');
 
             $table->timestamps();
         });
