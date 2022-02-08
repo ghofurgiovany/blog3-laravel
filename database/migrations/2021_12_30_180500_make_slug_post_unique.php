@@ -13,7 +13,7 @@ class MakeSlugPostUnique extends Migration
      */
     public function up()
     {
-        Schema::defaultStringLength(255):
+        Schema::defaultStringLength(255);
         Schema::table('posts', function (Blueprint $table) {
             $table->longText('slug')->nullable()->unique()->change();
         });

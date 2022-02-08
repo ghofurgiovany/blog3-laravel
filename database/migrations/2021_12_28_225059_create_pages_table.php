@@ -13,7 +13,7 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::defaultStringLength(255):
+        Schema::defaultStringLength(255);
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('page_id')->unique();
