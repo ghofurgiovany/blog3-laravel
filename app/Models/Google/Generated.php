@@ -11,5 +11,5 @@ class Generated extends Model
 
     protected $table    =   'google_news_articles';
     protected $guarded  =   [];
-    protected $primaryKey   =   'guid';
+    // protected $primaryKey   =   'guid';
 }

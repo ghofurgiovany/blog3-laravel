@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
 
             $table->bigInteger('author_id');
 
-            $table->longText('slug')->nullable();
+            $table->string('slug', 256)->unique()->nullable();
             $table->longText('title');
             $table->longText('description');
             $table->json('keywords');

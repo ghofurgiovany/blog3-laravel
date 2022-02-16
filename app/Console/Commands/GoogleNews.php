@@ -95,7 +95,8 @@ class GoogleNews extends Command
                 Generated::create([
                     'guid'  =>  (string) $item->guid,
                     'title' =>  (string) $item->title,
-                    'link'  =>  (string) $item->link
+                    'link'  =>  (string) $item->link,
+                    'status'   =>   'pending'
                 ]);
 
                 $jobBatch[] = new MakePostJob((string) $item->link, $keyword);

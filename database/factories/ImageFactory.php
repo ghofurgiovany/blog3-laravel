@@ -15,7 +15,7 @@ class ImageFactory extends Factory
     {
         return [
             'url'       =>  'https://picsum.photos/' . \Arr::random([400, 450, 500]) . '/' . \Arr::random([400, 450, 500]),
-            'altText'   =>  $this->faker->text(200)
+            'altText'   =>  'Giovany'
         ];
     }
 }
