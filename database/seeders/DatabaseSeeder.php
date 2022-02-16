@@ -62,6 +62,28 @@ class DatabaseSeeder extends Seeder
             'iso2'  =>  'us'
         ]);
 
+        $categories =   [
+            'insurance',
+            'finance',
+            'loans'
+        ];
+
+        foreach ($categories as $c) {
+            Category::create([
+                'name'  =>  ucfirst($c),
+                'slug'  =>  \Str::slug($c)
+            ]);
+
+            $keyword = Keyword::create([
+                'author_id' =>  1,
+                'keyword'   =>  $c,
+                'language'  =>  'en'
+            ]);
+
+            $keyword->countries()->attach(1);
+            $keyword->countries()->attach(2);
+        }
+
         // Category::factory()->create();
 
         // return;
